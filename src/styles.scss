@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+.text{
+    font-size: 12px !important;
+}
+p-inputnumber{
+    width: 100% !important;
+    span:nth-child(1){
+        width: 100% !important;
+    }
+    .p-inputtext{
+        
+        background-color: #f7f7f7 !important;
+        padding: 5px 10px !important;
+        border: solid #eee 1px !important;
+    }
+    .p-button{
+        background-color: #f7f7f7 !important;
+        border: solid #eee 1px !important;
+        color: #ccc !important;
+    }
+   
+    // .p-inputtext:enabled:hover{
+    //     border: #eee !important;
+    // }
+    .p-inputtext:enabled:focus{
+        box-shadow: 0 0 0 0rem transparent !important
+    }
+    
+}
