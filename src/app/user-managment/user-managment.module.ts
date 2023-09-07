@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { UserManagmentRoutingModule } from './user-managment-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   declarations: [
     LayoutComponent
@@ -15,7 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     UserManagmentRoutingModule,
     InputSwitchModule,
     FormsModule,
-    InputNumberModule
+    InputNumberModule,
+    TranslateModule,
+    ReactiveFormsModule
   ]
 })
 export class UserManagmentModule { }

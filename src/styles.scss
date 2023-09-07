@@ -2,6 +2,7 @@
 @import "primeicons/primeicons.css";
 .text{
     font-size: 12px !important;
+    color: #92A1AD !important;
 }
 p-inputnumber{
     width: 100% !important;
@@ -9,22 +10,49 @@ p-inputnumber{
         width: 100% !important;
     }
     .p-inputtext{
-        
-        background-color: #f7f7f7 !important;
-        padding: 5px 10px !important;
+        background-color: #F6F2F2 !important;
+        padding: 0px 10px !important;
         border: solid #eee 1px !important;
     }
     .p-button{
         background-color: #f7f7f7 !important;
         border: solid #eee 1px !important;
         color: #ccc !important;
+        border-radius: 1px !important;
     }
-   
+
+    .p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-up {
+        border-bottom: 0px solid !important;
+        background-color: #F6F2F2 !important;
+    }
+    .p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-down {
+        border-top: 0px solid !important;
+        background-color: #F6F2F2 !important;
+    }
+    .p-inputnumber-buttons-horizontal .p-button.p-inputnumber-button-up{
+        background-color: blue !important;
+        color: white !important;
+    }
+    .p-inputnumber-buttons-horizontal .p-button.p-inputnumber-button-down{
+        background-color: blue !important;
+        color: white !important;
+    }
+
+    .p-button.p-button-icon-only {
+        width: 30px !important;
+    }
     // .p-inputtext:enabled:hover{
     //     border: #eee !important;
     // }
     .p-inputtext:enabled:focus{
         box-shadow: 0 0 0 0rem transparent !important
     }
-    
+    .p-inputnumber-buttons-horizontal .p-inputnumber-input{
+        width: 100% !important;
+        border-radius: 0px !important;
+    }
 }
+
+// p-inputnumber:nth-child(2){
+//     width: 50px !important;
+// }

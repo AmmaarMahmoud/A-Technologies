@@ -10,6 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorInterceptor } from './@core/auth/interceptors/http-interceptor.interceptor';
 import { ApiService } from 'src/app/@core/api.service';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +23,17 @@ import { ApiService } from 'src/app/@core/api.service';
     SharedModule,
     AccountModule,
     CoreModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    })
+
+   
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
@@ -29,3 +43,6 @@ import { ApiService } from 'src/app/@core/api.service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}

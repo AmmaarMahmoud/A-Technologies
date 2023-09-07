@@ -1,200 +1,242 @@
 <div class="all">
-    <section class=" row d-flex align-items-center justify-content-between mb-4">
+    <div class="mb-4">
+        <select class="form-select w-25" aria-label="Default select example" (change)="ChangeLang($event)">
+            <option selected value="en">En</option>
+            <option value="ar">Ar</option>
+        </select>
+    </div>
+    <section class=" row gy-4 d-flex align-items-center justify-content-between mb-4">
         <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-between">
-            <button type="button" class="btn btn-light text"><img src="assets/icons/trash.svg" alt="" class="mx-2" width="18px">حذف الصوره</button>
-            <button type="button" class="btn btn-dark text">حفظ التغييرات</button>
+            <button type="button" class="btn btn-light text"><img src="assets/icons/trash.svg" alt="" class="mx-2" width="18px">{{'deleteImg' | translate }}</button>
+            <button type="button" class="btn btn-dark text mx-2">{{'Save_changes' | translate }}</button>
             <p-inputSwitch [(ngModel)]="checked" ></p-inputSwitch>
         </div>
         <div class="col-xxl-3  col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
-            <h6 class="mb-0 mx-2">إضافة موارد جديدة</h6>
+            <h6 class="mb-0 mx-2"> {{'add' | translate }}</h6>
             <img src="assets/icons/back.png" alt="" class="mx-2" width="40px">
         </div>
     </section>
-    <section class=" row d-flex align-items-center justify-content-between mb-4">
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
-            <div class="bg-white rounded-3 p-3">
-                <div class="text text-black-50 mb-1">المورد متاح الى</div>
-                <div class=" d-flex align-items-center justify-content-between">
-                    <div class="w-100">
-                        <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"> </p-inputNumber>
+    <div>
+        <form action=""  [formGroup]="Form">
+            <section class=" row gy-4 d-flex align-items-center justify-content-between mb-4">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="bg-background rounded-3 p-4">
+                        <div class="text text-black-50 mb-1">{{'Supplier_available_to' | translate }}</div>
+                        <div class=" d-flex align-items-center justify-content-between">
+                            <select class="form-select w-25 bg-select" aria-label="Default select example shadow-nove" formControlName="nameDate">
+                                <option selected value="day">{{'day' | translate }}</option>
+                                <option value="month">{{'month' | translate }}</option>
+                                <option value="year">{{'year' | translate }}</option>
+                            </select>
+                            <div class="w-100">
+                                <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="to_time"> </p-inputNumber>
+                            </div>
+                        </div>
+                        <div class="text text-black-50 my-1">{{'Resource_Time' | translate }}</div>
+                        <div class="d-flex align-items-center row">
+                            <div class="d-flex flex-md-wrap flex-lg-nowrap align-items-center justify-content-between col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div class="">
+                                    <input class="form-check-input mx-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)=" hideTimerInput()">
+                                    <img src="assets/icons/clock.svg" alt="" class="mx-1">
+                                    <label class="form-check-label " for="flexRadioDefault1">{{'Service_time' | translate }}</label>
+                                </div>
+                                <div class="">
+                                    <input class="form-check-input mx-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="showTimerInput()">
+                                    <img src="assets/icons/box-time.svg" alt="" class="mx-1">
+                                    <label class="form-check-label " for="flexRadioDefault1">{{'Time_is_fixed' | translate }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div *ngIf="showtimer">
+                                    <p-inputNumber [(ngModel)]="value3" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal" currency="EUR" formControlName="Minutes_Selection">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2"><span class="Multiple_Booking ">{{'Multiple_Booking' | translate }}</span> <img src="assets/icons/info-circle.svg" alt="" class="mx-2"></div>
+                        <div class="d-flex align-items-center row">
+                            <div class=" d-flex flex-md-wrap flex-lg-nowrap align-items-center justify-content-between col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div class="">
+                                    <input class="form-check-input mx-1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="hideCounterVector()">
+                                    <img src="assets/icons/Vector.svg" alt="" class="mx-1">
+                                    <label class="form-check-label  " for="flexRadioDefault1"> {{'One_booking_only' | translate }}</label>
+                                </div>
+                                <div class=" mx-3">
+                                    <input class="form-check-input mx-1" type="radio" name="flexRadioDefault" id="flexRadioDefault2" (click)="showCounterVector()">
+                                    <img src="assets/icons/tow vector.svg" alt="" class="mx-1">
+                                    <label class="form-check-label  " for="flexRadioDefault2"> {{'more_than_one_person' | translate }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div *ngIf="showcounter">
+                                    <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="Choose_appointment"> </p-inputNumber >
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <select class="form-select w-25" aria-label="Default select example">
-                        <option selected>menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
                 </div>
-                <div class="text text-black-50 my-1">وقت المورد</div>
-                <div class=" d-flex align-items-center row">
-                    <div class="d-flex align-items-center justify-content-between col-6">
-                        <div class="form-check mx-4 d-flex align-items-center">
-                            <label class="form-check-label text" for="flexRadioDefault1">
-                                وقت الخدمه
-                            </label>
-                            <img src="assets/icons/box-time.svg" alt="">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div>
+                        <div class=" d-flex align-items-center bg-white rounded-3 p-4 mb-4">
+                            <img src="assets/icons/Image-user.png" class="mx-2" alt="" width="90px">
+                            <div class="w-100">
+                                <label for="exampleInputtext my-3" class="form-label text">{{'Resource_Name' | translate }}</label>
+                                <input type="text" class="form-control bg-light" placeholder="هيثم محمد " id="exampleInputtext" aria-describedby="emailHelp" formControlName="name_User">
+                            </div>
+                            
                         </div>
-                        <div class="form-check d-flex align-items-center">
-                            <label class="form-check-label text" for="flexRadioDefault1">
-                                وقت الخدمه
-                            </label>
-                            <img src="assets/icons/clock.svg" alt="">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <div class=" d-flex align-items-center bg-white rounded-3 p-3 mb-2">
+                            <div class="Select_Resource text">{{'Select_Resource_Type' | translate }}</div>
+                            <div class=" d-flex align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <label class="form-check-label text" for="flexRadioDefault1">
+                                        {{'Reservation_during_the_day' | translate }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                    <label class="form-check-label text" for="flexRadioDefault2">
+                                        {{'Reservation_period' | translate }}
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class=" col-6">
+                </div>
+            </section>
+            <section>
+                <div class="bg-white rounded-3 p-3">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
                         <div>
-                            <p-inputNumber [(ngModel)]="value3" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal" currency="EUR">
-                            </p-inputNumber>
+                            <h6>{{'Set_work_times_for_the_resource' | translate }}</h6>
+                            <p class="text">{{'Configure_your_week' | translate }}</p>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-light ">{{'Advanced_settings' | translate }}</button>
+                            <button type="button" class="btn btn-primary">{{'Traditional_settings' | translate }}</button>
                         </div>
                     </div>
-                </div>
-                <div class="mt-2"><span>الحجز المتعدد</span> <img src="assets/icons/info-circle.svg" alt="" class="mx-2"></div>
-                <div class="d-flex align-items-center bg-white rounded-3 p-3 mb-1">
-                    <div class=" d-flex align-items-center">
-                        <div class="form-check">
-                            <img src="assets/icons/Vector.svg" alt="" class="mx-2">
-                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label class="form-check-label text bg-white" for="flexRadioDefault1">
-                                حجز واحد فقط
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <img src="assets/icons/tow vector.svg" alt="" class="mx-2">
-                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label text bg-white" for="flexRadioDefault2">
-                                حجز اكثر من شخص لنفس الموعد
-                            </label>
+                    <div class="row gy-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <p-inputSwitch [(ngModel)]="check_0"  [disabled]="true"></p-inputSwitch>
+                            <span class="mx-2">{{'Saturday' | translate }}</span>
                         </div>
                         
-                    </div>
-                    <div >
-                        <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"> </p-inputNumber>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
-            <div>
-                <div class=" d-flex align-items-center bg-white rounded-3 p-4 mb-4">
-                    <img src="assets/icons/Image-user.png" class="mx-2" alt="" width="90px">
-                    <div class="w-100">
-                        <label for="exampleInputtext" class="form-label">اسم الموارد</label>
-                        <input type="text" class="form-control bg-light" placeholder="هيثم محمد " id="exampleInputtext" aria-describedby="emailHelp">
-                    </div>
-                    
-                </div>
-                <div class=" d-flex align-items-center bg-white rounded-3 p-3 mb-2">
-                    <div>اختر نوع الموارد</div>
-                    <div class=" d-flex align-items-center">
-                        <div class="form-check">
-                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                حجز خلال اليوم
-                            </label>
+                        <div>
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <p-inputSwitch [(ngModel)]="check_1" ></p-inputSwitch>
+                                        <span class="mx-2">{{'Sunday' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-100" #paerent>
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3">
+                                        
+                                            <input type="time" class="form-control bg-white" >
+                                        
+                                        
+                                            <input type="time" class="form-control bg-white" >
+                                        
+                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(0)">
+                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                حجز مدة ( أكثر من يوم )
-                            </label>
+                        
+                        <div>
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <p-inputSwitch [(ngModel)]="check_2" ></p-inputSwitch>
+                                        <span class="mx-2">{{'Monday' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-100" #paerent>
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3">
+                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
+                                      
+                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
+                                      
+                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(1)">
+                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <p-inputSwitch [(ngModel)]="check_3" ></p-inputSwitch>
+                                        <span class="mx-2">{{'Tuesday' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-100" #paerent>
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3">
+        
+                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
+                                     
+                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
+                                     
+                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(2)">
+                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div>
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <p-inputSwitch [(ngModel)]="check_4" ></p-inputSwitch>
+                                        <span class="mx-2">{{'Wednesday' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-100" #paerent>
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3">
+                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
+                                        
+                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
+                                        
+                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(3)">
+                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div>
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                                <div>
+                                    <div class="d-flex align-items-center">
+                                        <p-inputSwitch [(ngModel)]="check_5" ></p-inputSwitch>
+                                        <span class="mx-2">{{'Thursday' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-100" #paerent>
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3" >
+                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
+                                        
+                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
+                                       
+                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(4)">
+                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <p-inputSwitch [(ngModel)]="check_6" [disabled]="true"></p-inputSwitch>
+                            <span class="mx-2">{{'frayday' | translate }}</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="bg-white rounded-3 p-3">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <div>
-                    <h6>حدد مواعيد العمل للمورد</h6>
-                    <p class="text">تكوين إعدادات الأسبوع الخاص بك هنا. ما عليك سوى تحريك أشرطة التمرير وإضافة / إزالة أوقات الراحة لإعداد ساعات العمل.</p>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-light text">إعدادات تقليدية</button>
-                    <button type="button" class="btn btn-primary text">إعدادات متقدمة</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="d-flex align-items-center mb-4">
-                    <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                    <span class="mx-2">السبت</span>
-                </div>
-
-                <div class="d-flex align-items-center mb-4 col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <div class="d-flex align-items-center">
-                        <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                        <span class="mx-2">الاحد</span>
-                    </div>
-                    <div class="w-100 mx-2">
-                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                    </div>
-                    <div class="w-100">
-                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                    </div>
-                    <img src="assets/icons/plus.png" alt="" class="mx-2">
-                    <img src="assets/icons/copy.png" alt="" class="mx-2">
-                </div>
-                
-                <div class="d-flex align-items-center mb-4 col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <div class="d-flex align-items-center">
-                        <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                        <span class="mx-2">الاثنين</span>
-                    </div>
-                    <div class="w-100 mx-2">
-                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                    </div>
-                    <div class="w-100">
-                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                    </div>
-                    <img src="assets/icons/plus.png" alt="" class="mx-2">
-                    <img src="assets/icons/copy.png" alt="" class="mx-2">
-                </div>
-                <div class="d-flex align-items-center mb-4 col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <div class="d-flex align-items-center">
-                        <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                        <span class="mx-2">الثلاثاء</span>
-                    </div>
-                    <div class="w-100 mx-2">
-                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                    </div>
-                    <div class="w-100">
-                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                    </div>
-                    <img src="assets/icons/plus.png" alt="" class="mx-2">
-                    <img src="assets/icons/copy.png" alt="" class="mx-2">
-                </div>
-                <div class="d-flex align-items-center mb-4 col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <div class="d-flex align-items-center">
-                        <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                        <span class="mx-2">الاربعاء</span>
-                    </div>
-                    <div class="w-100 mx-2">
-                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                    </div>
-                    <div class="w-100">
-                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                    </div>
-                    <img src="assets/icons/plus.png" alt="" class="mx-2">
-                    <img src="assets/icons/copy.png" alt="" class="mx-2">
-                </div>
-                <div class="d-flex align-items-center mb-4 col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <div class="d-flex align-items-center">
-                        <p-inputSwitch [(ngModel)]="check" ></p-inputSwitch>
-                        <span class="mx-2">الخميس</span>
-                    </div>
-                    <div class="w-100 mx-2">
-                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                    </div>
-                    <div class="w-100">
-                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                    </div>
-                    <img src="assets/icons/plus.png" alt="" class="mx-2">
-                    <img src="assets/icons/copy.png" alt="" class="mx-2">
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        </form>
+    </div>
 </div>
