@@ -27,3 +27,11 @@ label:nth-child(2){
 button{
     font-size: 10px !important;
 }
+.cont_img{
+    position: relative;
+    .icon_Image{
+        position: absolute;
+        left: 5px;
+        top: 2px;
+    }
+}

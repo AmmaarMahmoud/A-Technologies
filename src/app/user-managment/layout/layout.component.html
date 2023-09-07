@@ -5,31 +5,31 @@
             <option value="ar">Ar</option>
         </select>
     </div>
-    <section class=" row gy-4 d-flex align-items-center justify-content-between mb-4">
-        <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-between">
-            <button type="button" class="btn btn-light text"><img src="assets/icons/trash.svg" alt="" class="mx-2" width="18px">{{'deleteImg' | translate }}</button>
-            <button type="button" class="btn btn-dark text mx-2">{{'Save_changes' | translate }}</button>
-            <p-inputSwitch [(ngModel)]="checked" ></p-inputSwitch>
-        </div>
-        <div class="col-xxl-3  col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
-            <h6 class="mb-0 mx-2"> {{'add' | translate }}</h6>
-            <img src="assets/icons/back.png" alt="" class="mx-2" width="40px">
-        </div>
-    </section>
-    <div>
-        <form action=""  [formGroup]="Form">
+    <form action=""  [formGroup]="Form" (ngSubmit)="Submit()">
+        <section class=" row gy-4 d-flex align-items-center justify-content-between mb-4">
+            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-between">
+                <button type="button" class="btn btn-light text"><img src="assets/icons/trash.svg" alt="" class="mx-2" width="18px">{{'deleteImg' | translate }}</button>
+                <button type="submit" class="btn btn-dark text mx-2">{{'Save_changes' | translate }}</button>
+                <p-inputSwitch ></p-inputSwitch>
+            </div>
+            <div class="col-xxl-3  col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
+                <h6 class="mb-0 mx-2"> {{'add' | translate }}</h6>
+                <img src="assets/icons/back.png" alt="" class="mx-2" width="40px">
+            </div>
+        </section>
+        <div>
             <section class=" row gy-4 d-flex align-items-center justify-content-between mb-4">
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="bg-background rounded-3 p-4">
                         <div class="text text-black-50 mb-1">{{'Supplier_available_to' | translate }}</div>
                         <div class=" d-flex align-items-center justify-content-between">
                             <select class="form-select w-25 bg-select" aria-label="Default select example shadow-nove" formControlName="nameDate">
-                                <option selected value="day">{{'day' | translate }}</option>
+                                <option value="day" selected>{{'day' | translate }}</option>
                                 <option value="month">{{'month' | translate }}</option>
                                 <option value="year">{{'year' | translate }}</option>
                             </select>
                             <div class="w-100">
-                                <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="to_time"> </p-inputNumber>
+                                <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="to_time"> </p-inputNumber>
                             </div>
                         </div>
                         <div class="text text-black-50 my-1">{{'Resource_Time' | translate }}</div>
@@ -48,7 +48,7 @@
                             </div>
                             <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                 <div *ngIf="showtimer">
-                                    <p-inputNumber [(ngModel)]="value3" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal" currency="EUR" formControlName="Minutes_Selection">
+                                    <p-inputNumber [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal" currency="EUR" formControlName="Minutes_Selection">
                                     </p-inputNumber>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                             </div>
                             <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                 <div *ngIf="showcounter">
-                                    <p-inputNumber [(ngModel)]="value1" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="Choose_appointment"> </p-inputNumber >
+                                    <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" formControlName="Choose_appointment"> </p-inputNumber >
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,17 @@
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div>
                         <div class=" d-flex align-items-center bg-white rounded-3 p-4 mb-4">
-                            <img src="assets/icons/Image-user.png" class="mx-2" alt="" width="90px">
+                            <div>
+                                <label for="img" class="form-label cont_img" *ngIf="!srcImg">
+                                    <img src="assets/icons/Image-user.png" class="mx-2" alt="" width="90px">
+                                    <img class="icon_Image" src="assets/icons/icon_Image.png" alt="">
+                                </label>
+                                <label for="img" class="form-label cont_img" *ngIf="srcImg">
+                                    <img [src]="srcImg" class="mx-2 rounded-pill" alt="" width="90px" height="110px">
+                                    <img class="icon_Image" src="assets/icons/icon_Image.png" alt="">
+                                </label>
+                                <input type="file" class="form-control" id="img" aria-describedby="emailHelp" [hidden]="true" (change)="seletedImg($event)">
+                            </div>
                             <div class="w-100">
                                 <label for="exampleInputtext my-3" class="form-label text">{{'Resource_Name' | translate }}</label>
                                 <input type="text" class="form-control bg-light" placeholder="هيثم محمد " id="exampleInputtext" aria-describedby="emailHelp" formControlName="name_User">
@@ -89,16 +99,12 @@
                             <div class="Select_Resource text">{{'Select_Resource_Type' | translate }}</div>
                             <div class=" d-flex align-items-center">
                                 <div class="form-check">
+                                    <label class="form-check-label text" for="flexRadioDefault1">{{'Reservation_during_the_day' | translate }}</label>
                                     <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                    <label class="form-check-label text" for="flexRadioDefault1">
-                                        {{'Reservation_during_the_day' | translate }}
-                                    </label>
                                 </div>
                                 <div class="form-check">
+                                    <label class="form-check-label text" for="flexRadioDefault2">{{'Reservation_period' | translate }}</label>
                                     <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                    <label class="form-check-label text" for="flexRadioDefault2">
-                                        {{'Reservation_period' | translate }}
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -119,29 +125,29 @@
                     </div>
                     <div class="row gy-4">
                         <div class="d-flex align-items-center mb-4">
-                            <p-inputSwitch [(ngModel)]="check_0"  [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch  [disabled]="true"></p-inputSwitch>
                             <span class="mx-2">{{'Saturday' | translate }}</span>
                         </div>
                         
                         <div>
-                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
+                            <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12" >
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <p-inputSwitch [(ngModel)]="check_1" ></p-inputSwitch>
+                                        <p-inputSwitch (click)="Showtimer(0)"></p-inputSwitch>
                                         <span class="mx-2">{{'Sunday' | translate }}</span>
                                     </div>
                                 </div>
-                                <div class="w-100" #paerent>
-                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3">
-                                        
-                                            <input type="time" class="form-control bg-white" >
-                                        
-                                        
-                                            <input type="time" class="form-control bg-white" >
-                                        
-                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(0)">
-                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
+                                <div class="w-100" formArrayName="Sunday" *ngIf="check_0">
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3" *ngFor="let item of sunday.controls; let i = index">
+                                            <ng-container  [formGroupName]="i">
+                                                <input type="time" class="form-control bg-white" formControlName="startTime">
+                                                <input type="time" class="form-control bg-white"  formControlName="endTime">
+                                            </ng-container>
+                                        <img *ngIf="i==0" src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(0)">
+                                        <img *ngIf="i>0" src="assets/icons/minus.png" alt="" class="mx-2" (click)="removeTimer(0,i)">
+                                        <img [hidden]="i>0" src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -150,18 +156,19 @@
                             <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <p-inputSwitch [(ngModel)]="check_2" ></p-inputSwitch>
+                                        <p-inputSwitch  (click)="Showtimer(1)"></p-inputSwitch>
                                         <span class="mx-2">{{'Monday' | translate }}</span>
                                     </div>
                                 </div>
-                                <div class="w-100" #paerent>
-                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3">
-                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                                      
-                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                                      
-                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(1)">
-                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                <div class="w-100" formArrayName="Monday" *ngIf="check_1">
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3" *ngFor="let item of Monday.controls; let i = index">
+                                        <ng-container  [formGroupName]="i">
+                                            <input type="time" class="form-control bg-white" formControlName="startTime">
+                                            <input type="time" class="form-control bg-white"  formControlName="endTime">
+                                        </ng-container>
+                                    <img *ngIf="i==0" src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(1)">
+                                    <img *ngIf="i>0" src="assets/icons/minus.png" alt="" class="mx-2" (click)="removeTimer(1,i)">
+                                    <img [hidden]="i>0" src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
                                     </div>
                                 </div>
                             </div>
@@ -171,19 +178,19 @@
                             <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <p-inputSwitch [(ngModel)]="check_3" ></p-inputSwitch>
+                                        <p-inputSwitch (click)="Showtimer(2)"></p-inputSwitch>
                                         <span class="mx-2">{{'Tuesday' | translate }}</span>
                                     </div>
                                 </div>
-                                <div class="w-100" #paerent>
-                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3">
-        
-                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                                     
-                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                                     
-                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(2)">
-                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                <div class="w-100" formArrayName="Tuesday"  *ngIf="check_2">
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3" *ngFor="let item of Tuesday.controls; let i = index">
+                                        <ng-container [formGroupName]="i">
+                                            <input type="time" class="form-control bg-white" formControlName="startTime">
+                                            <input type="time" class="form-control bg-white"  formControlName="endTime">
+                                        </ng-container>
+                                        <img *ngIf="i==0" src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(2)">
+                                        <img *ngIf="i>0" src="assets/icons/minus.png" alt="" class="mx-2" (click)="removeTimer(2,i)">
+                                        <img [hidden]="i>0" src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
                                     </div>
                                 </div>
                             </div>
@@ -193,18 +200,19 @@
                             <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <p-inputSwitch [(ngModel)]="check_4" ></p-inputSwitch>
+                                        <p-inputSwitch  (click)="Showtimer(3)"></p-inputSwitch>
                                         <span class="mx-2">{{'Wednesday' | translate }}</span>
                                     </div>
                                 </div>
-                                <div class="w-100" #paerent>
-                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3">
-                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                                        
-                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                                        
-                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(3)">
-                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                <div class="w-100" formArrayName="Wednesday"  *ngIf="check_3">
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3" *ngFor="let item of Wednesday.controls; let i = index">
+                                        <ng-container  [formGroupName]="i">
+                                            <input type="time" class="form-control bg-white" formControlName="startTime">
+                                            <input type="time" class="form-control bg-white"  formControlName="endTime">
+                                        </ng-container>
+                                        <img *ngIf="i==0" src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(3)">
+                                        <img *ngIf="i>0" src="assets/icons/minus.png" alt="" class="mx-2" (click)="removeTimer(3,i)">
+                                        <img [hidden]="i>0" src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
                                     </div>
                                 </div>
                             </div>
@@ -214,29 +222,30 @@
                             <div class="d-flex col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12 flex-wrap flex-sm-nowrap col-xs-12">
                                 <div>
                                     <div class="d-flex align-items-center">
-                                        <p-inputSwitch [(ngModel)]="check_5" ></p-inputSwitch>
+                                        <p-inputSwitch  (click)="Showtimer(4)"></p-inputSwitch>
                                         <span class="mx-2">{{'Thursday' | translate }}</span>
                                     </div>
                                 </div>
-                                <div class="w-100" #paerent>
-                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap col-xs-12 mb-3" >
-                                        <input type="time" class="form-control bg-white" id="start" aria-describedby="emailHelp">
-                                        
-                                        <input type="time" class="form-control bg-white" id="end" aria-describedby="emailHelp">
-                                       
-                                        <img src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(4)">
-                                        <img src="assets/icons/copy.png" alt="" class="mx-2" width="40px">
+                                <div class="w-100" formArrayName="Thursday"  *ngIf="check_4">
+                                    <div  class="d-flex align-items-center flex-wrap flex-sm-nowrap mb-3" *ngFor="let item of Thursday.controls; let i = index">
+                                        <ng-container  [formGroupName]="i">
+                                            <input type="time" class="form-control bg-white" formControlName="startTime">
+                                            <input type="time" class="form-control bg-white"  formControlName="endTime">
+                                        </ng-container>
+                                        <img *ngIf="i==0" src="assets/icons/plus.png" alt="" class="mx-2" (click)="addTimer(4)">
+                                        <img *ngIf="i>0" src="assets/icons/minus.png" alt="" class="mx-2" (click)="removeTimer(4,i)">
+                                        <img [hidden]="i>0" src="assets/icons/copy.png" alt="" class="mx-2" width="40px" width="40px">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex align-items-center mb-4">
-                            <p-inputSwitch [(ngModel)]="check_6" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch [disabled]="true"></p-inputSwitch>
                             <span class="mx-2">{{'frayday' | translate }}</span>
                         </div>
                     </div>
                 </div>
             </section>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

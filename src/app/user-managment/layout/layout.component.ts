@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LunguageService } from 'src/app/@core/services/lunguage.service';
 
 @Component({
   selector: 'app-layout',
-  templateUrl: './layout.component.html',
+  templateUrl:'./layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
@@ -27,58 +27,156 @@ export class LayoutComponent implements OnInit {
    this.languge.lang.subscribe(res=>{
     this.translate.use(res)
    })
-   this.Form=this.buider.group({
-    nameDate:[''],
-    to_time:[''],
-    Minutes_Selection:[''],
-    Choose_appointment:[''],
-    name_User:[''],
-   })
   }
   ngOnInit(): void {
+    this.Form = this.buider.group({
+      nameDate:[''],
+      to_time:[''],
+      Minutes_Selection:[''],
+      Choose_appointment:[''],
+      name_User:[''],
+      Sunday:this.buider.array([
+       this.buider.group({
+          startTime:[''],
+          endTime:[''],
+        })
+      ]),
+      Monday:this.buider.array([
+       this.buider.group({
+          startTime:[''],
+          endTime:[''],
+        })
+      ]),
+      Tuesday:this.buider.array([
+       this.buider.group({
+          startTime:[''],
+          endTime:[''],
+        })
+      ]),
+      Wednesday:this.buider.array([
+       this.buider.group({
+          startTime:[''],
+          endTime:[''],
+        })
+      ]),
+      Thursday:this.buider.array([
+       this.buider.group({
+          startTime:[''],
+          endTime:[''],
+        })
+      ]),
+      key_1:['']
+     })
   }
+  get sunday() {
+    return this.Form.get('Sunday') as FormArray;
+  }
+  get Monday() {
+    return this.Form.get('Monday') as FormArray;
+  }
+  get Tuesday() {
+    return this.Form.get('Tuesday') as FormArray;
+  }
+  get Wednesday() {
+    return this.Form.get('Wednesday') as FormArray;
+  }
+  get Thursday() {
+    return this.Form.get('Thursday') as FormArray;
+  }
+  get key_1() {
+    return this.Form.get('key_1');
+  }
+
   addTimer(index:number){
 
-    const elementsArray = this.paerent.toArray();
 
-    if (elementsArray.length >=5) {
-      const thirdElement = elementsArray[index];
-      console.log(thirdElement.nativeElement);
-      const mydiv=this.raber.createElement('div');
-      this.raber.addClass(mydiv,'d-flex')
-      this.raber.addClass(mydiv,'align-items-center')
-      this.raber.addClass(mydiv,'mb-2')
-      this.raber.addClass(mydiv,'flex-wrap')
-      this.raber.addClass(mydiv,'flex-sm-nowrap')
-      const time_1=this.raber.createElement('input');
-      time_1.type='time'
-      this.raber.addClass(time_1,'form-control')
-      this.raber.addClass(time_1,'bg-white')
-      const time_2=this.raber.createElement('input');
-      time_2.type='time'
-      this.raber.addClass(time_2,'form-control')
-      this.raber.addClass(time_2,'bg-white')
-      const imgMinus=this.raber.createElement('img')
-      imgMinus.src='assets/icons/minus.png'
-      this.raber.addClass(imgMinus,'mx-2')
-      this.raber.listen(imgMinus,'click',()=>{
-        this.deleteelement(event);
-      })
+    switch (index) {
+      case 0:
+        {
+          const sunday =this.buider.group({
+            startTime:[''],
+            endTime:['']
+          })
+          this.sunday.push(sunday)
+          break;
+        }
 
-      this.raber.appendChild(mydiv,time_1)
-      this.raber.appendChild(mydiv,time_2)
-      this.raber.appendChild(mydiv,imgMinus)
-      this.raber.appendChild(thirdElement.nativeElement,mydiv)
-      // قم بالتلاعب بالعنصر الثالث هنا
-      
+      case 1:
+        {
+          const Monday =this.buider.group({
+            startTime:[''],
+            endTime:['']
+          })
+          this.Monday.push(Monday)
+          break;
+        }
+        // لا يوجد break هنا
+      case 2:
+        {
+          const Tuesday =this.buider.group({
+            startTime:[''],
+            endTime:['']
+          })
+          this.Tuesday.push(Tuesday)
+          break;
+        }// هذا هو الـ break المناسب
+      case 3:
+        {
+          const Wednesday =this.buider.group({
+            startTime:[''],
+            endTime:['']
+          })
+          this.Wednesday.push(Wednesday)
+          break;
+        }
+      default:
+        {
+          const Thursday =this.buider.group({
+            startTime:[''],
+            endTime:['']
+          })
+          this.Thursday.push(Thursday)
+          break;
+        }
     }
-  }
-  deleteelement(event?:any){
-    console.log(event.target);
-    const parent = event.target.parentNode.parentNode
-    const child = event.target.parentNode
-    this.raber.removeChild(parent,child)
     
+  }
+  removeTimer(num:number,index:number){
+
+    switch (num) {
+      case 0:
+        {
+          const sundayArray = this.Form.get('Sunday') as FormArray;
+          sundayArray.removeAt(index);
+          break;
+        }
+
+      case 1:
+        {
+          const mondayArray = this.Form.get('Monday') as FormArray;
+          mondayArray.removeAt(index);
+          break;
+        }
+        // لا يوجد break هنا
+      case 2:
+        {
+          const tuesdayArray = this.Form.get('Tuesday') as FormArray;
+          tuesdayArray.removeAt(index);
+          break;
+        }
+      case 3:
+        {
+          const WednesayArray = this.Form.get('Wednesday') as FormArray;
+          WednesayArray.removeAt(index);
+          break;
+        }
+      default:
+        {
+          const ThursdayArray = this.Form.get('Thursday') as FormArray;
+          ThursdayArray.removeAt(index);
+          break;
+        }
+    }
   }
   ChangeLang(event?:any){
     this.languge.changeLang(event.target.value)
@@ -95,7 +193,61 @@ export class LayoutComponent implements OnInit {
   hideCounterVector(){
     this.showcounter=false
   }
-  dialogg(){
-    this.check_5=!this.check_5
+
+  Showtimer(n:number){
+    if(n==0){
+      
+    }
+    switch (n) {
+      case 0:
+        {
+          this.check_0=!this.check_0
+          break;
+        }
+
+      case 1:
+        {
+          this.check_1=!this.check_1
+          break;
+        }
+        // لا يوجد break هنا
+      case 2:
+        {
+          this.check_2=!this.check_2
+          break;
+        }
+      case 3:
+        {
+          this.check_3=!this.check_3
+          break;
+        }
+      default:
+        {
+          this.check_4=!this.check_4
+          break;
+        }
+    }
   }
+
+  Submit(){
+    const formValue=JSON.stringify(this.Form.value)
+    // console.log(formValue);
+    alert(formValue)
+    
+  }
+  srcImg:File|null=null
+  seletedImg(event:any){
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        // يتم عرض الصورة كـ data URL
+        this.srcImg = e.target.result;
+        console.log(this.srcImg); // يمكنك استخدامها أو عرضها في واجهة المستخدم
+      };
+
+      reader.readAsDataURL(file);
+  }
+}
 }
